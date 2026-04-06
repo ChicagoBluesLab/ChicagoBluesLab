@@ -1,389 +1,97 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chicago Blues Lab</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago Blues Lab</title>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
-    }
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial;
+}
 
-    .bg {
-      position: fixed;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      filter: blur(36px) brightness(0.18);
-      transform: scale(1.12);
-      z-index: -2;
-      transition: background-image 0.35s ease;
-    }
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px;
+}
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at center, rgba(255,0,60,0.08), transparent 35%),
-        linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.88));
-      z-index: -1;
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
 
-    .page {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 40px 20px 60px;
-    }
+.card {
+  cursor: pointer;
+}
 
-    .hero {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
 
-    .brand {
-      margin: 0;
-      font-size: 16px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #cfcfcf;
-    }
-
-    .headline {
-      margin: 10px 0;
-      font-size: 48px;
-      line-height: 1.05;
-      font-weight: 800;
-    }
-
-    .sub {
-      margin: 0 auto;
-      max-width: 700px;
-      color: #b3b3b3;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .section-title {
-      margin: 40px 0 18px;
-      font-size: 14px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #a8a8a8;
-    }
-
-    .track-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 18px;
-      margin-bottom: 42px;
-    }
-
-    .track-card {
-      position: relative;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      overflow: hidden;
-      background: rgba(20,20,20,0.72);
-      backdrop-filter: blur(10px);
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    }
-
-    .track-card:hover {
-      transform: translateY(-6px) scale(1.02);
-      border-color: rgba(255,255,255,0.18);
-      box-shadow: 0 18px 50px rgba(0,0,0,0.38);
-    }
-
-    .track-card.active {
-      border-color: rgba(255,255,255,0.35);
-      box-shadow: 0 18px 55px rgba(255, 0, 60, 0.15);
-    }
-
-    .track-cover {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      object-fit: cover;
-      display: block;
-    }
-
-    .track-info {
-      padding: 12px 12px 14px;
-    }
-
-    .track-name {
-      margin: 0 0 6px;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .track-meta {
-      margin: 0;
-      font-size: 12px;
-      color: #aaaaaa;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    .player-panel {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 26px;
-      align-items: center;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(15,15,15,0.76);
-      border-radius: 26px;
-      padding: 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.32);
-      backdrop-filter: blur(12px);
-    }
-
-    .player-cover {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: 20px;
-      display: block;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.34);
-    }
-
-    .player-text-top {
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #bdbdbd;
-      margin-bottom: 10px;
-    }
-
-    .player-title {
-      margin: 0 0 12px;
-      font-size: 42px;
-      line-height: 1.08;
-      font-weight: 800;
-    }
-
-    .player-desc {
-      margin: 0 0 22px;
-      color: #b5b5b5;
-      font-size: 15px;
-      line-height: 1.6;
-      max-width: 680px;
-    }
-
-    audio {
-      width: 100%;
-      margin-bottom: 18px;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 24px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 15px;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      opacity: 0.96;
-    }
-
-    .btn-primary {
-      background: #fff;
-      color: #000;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    .footer-note {
-      margin-top: 16px;
-      font-size: 12px;
-      color: #8a8a8a;
-    }
-
-    @media (max-width: 980px) {
-      .player-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .player-title {
-        font-size: 34px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page {
-        padding: 28px 14px 40px;
-      }
-
-      .headline {
-        font-size: 34px;
-      }
-
-      .sub {
-        font-size: 14px;
-      }
-
-      .track-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-      }
-
-      .player-title {
-        font-size: 28px;
-      }
-
-      .btn {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  </style>
+.player {
+  margin-top: 40px;
+}
+</style>
 </head>
+
 <body>
-  <div class="bg" id="bg"></div>
-  <div class="overlay"></div>
 
-  <div class="page">
-    <div class="hero">
-      <p class="brand">Chicago Blues Lab</p>
-      <h1 class="headline">Midnight Blues Collection</h1>
-      <p class="sub">Slow emotional blues for late night souls. Choose a track below and play it instantly.</p>
-    </div>
+<div class="container">
 
-    <div class="section-title">Latest Tracks</div>
-    <div class="track-grid" id="trackGrid"></div>
+<h1>Chicago Blues Lab</h1>
 
-    <div class="player-panel">
-      <div>
-        <img src="" alt="Selected track cover" class="player-cover" id="playerCover">
-      </div>
+<div class="grid" id="grid"></div>
 
-      <div>
-        <div class="player-text-top" id="playerArtist"></div>
-        <h2 class="player-title" id="playerTitle"></h2>
-        <p class="player-desc" id="playerDesc"></p>
+<div class="player">
+  <h2 id="title"></h2>
+  <audio controls id="audio"></audio>
+</div>
 
-        <audio controls id="mainAudio" preload="metadata">
-          <source src="" type="audio/mpeg" id="mainSource">
-          Your browser does not support the audio element.
-        </audio>
+</div>
 
-        <div class="btn-row">
-          <a href="#" download class="btn btn-primary" id="downloadBtn">Download Track</a>
-          <a href="#" target="_blank" class="btn btn-secondary" id="youtubeBtn">Watch on YouTube</a>
-        </div>
+<script>
 
-        <div class="footer-note">Official release page</div>
-      </div>
-    </div>
-  </div>
+// 🔥 SADECE BURAYA ŞARKI EKLEYECEKSİN
+const tracks = [
+  {
+    title: "Midnight Blues Guitar",
+    audio: "track1.mp3",
+    cover: "cover.jpg"
+  }
+];
 
-  <script>
-    const tracks = [
-      {
-        title: "Midnight Blues Guitar",
-        artist: "Chicago Blues Lab",
-        desc: "Slow emotional blues for late night souls.",
-        audio: "track1.mp3",
-        cover: "cover1.jpg",
-        youtube: "https://www.youtube.com/"
-      },
-      {
-        title: "Dark Night Blues",
-        artist: "Chicago Blues Lab",
-        desc: "Moody late night blues with a darker, cinematic edge.",
-        audio: "track2.mp3",
-        cover: "cover2.jpg",
-        youtube: "https://www.youtube.com/"
-      },
-      {
-        title: "Lonely Smoke Blues",
-        artist: "Chicago Blues Lab",
-        desc: "A lonely barroom blues drifting through midnight smoke.",
-        audio: "track3.mp3",
-        cover: "cover3.jpg",
-        youtube: "https://www.youtube.com/"
-      }
-    ];
+// ---------------------------------
 
-    const trackGrid = document.getElementById("trackGrid");
-    const bg = document.getElementById("bg");
-    const cover = document.getElementById("playerCover");
-    const artist = document.getElementById("playerArtist");
-    const title = document.getElementById("playerTitle");
-    const desc = document.getElementById("playerDesc");
-    const source = document.getElementById("mainSource");
-    const audio = document.getElementById("mainAudio");
-    const downloadBtn = document.getElementById("downloadBtn");
-    const youtubeBtn = document.getElementById("youtubeBtn");
+const grid = document.getElementById("grid");
+const audio = document.getElementById("audio");
+const title = document.getElementById("title");
 
-    function renderCards() {
-      trackGrid.innerHTML = "";
+tracks.forEach(track => {
 
-      tracks.forEach((track, index) => {
-        const card = document.createElement("div");
-        card.className = "track-card" + (index === 0 ? " active" : "");
+  const div = document.createElement("div");
+  div.className = "card";
 
-        card.innerHTML = `
-          <img src="${track.cover}" alt="${track.title} cover" class="track-cover">
-          <div class="track-info">
-            <p class="track-name">${track.title}</p>
-            <p class="track-meta">${track.artist}</p>
-          </div>
-        `;
+  div.innerHTML = `
+    <img src="${track.cover}">
+    <p>${track.title}</p>
+  `;
 
-        card.addEventListener("click", () => {
-          document.querySelectorAll(".track-card").forEach(c => c.classList.remove("active"));
-          card.classList.add("active");
-          setTrack(track);
-        });
+  div.onclick = () => {
+    audio.src = track.audio;
+    title.innerText = track.title;
+    audio.play();
+  };
 
-        trackGrid.appendChild(card);
-      });
-    }
+  grid.appendChild(div);
+});
 
-    function setTrack(track) {
-      title.textContent = track.title;
-      artist.textContent = track.artist;
-      desc.textContent = track.desc;
-      cover.src = track.cover;
-      bg.style.backgroundImage = `url('${track.cover}')`;
+</script>
 
-      source.src = track.audio;
-      audio.load();
-
-      downloadBtn.href = track.audio;
-      downloadBtn.setAttribute("download", track.audio);
-
-      youtubeBtn.href = track.youtube;
-    }
-
-    renderCards();
-    setTrack(tracks[0]);
-  </script>
 </body>
 </html>
