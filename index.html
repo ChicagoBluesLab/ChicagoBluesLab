@@ -1,97 +1,149 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chicago Blues Lab</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicago Blues Lab | Digital Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Netflix Tarzı Karanlık Tema CSS */
+        :root {
+            --bg-color: #0b0b0b;
+            --card-bg: #181818;
+            --accent-color: #e50914; /* Netflix Kırmızısı */
+            --text-main: #ffffff;
+            --text-dim: #b3b3b3;
+        }
 
-<style>
-body {
-  margin: 0;
-  background: black;
-  color: white;
-  font-family: Arial;
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
 
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 30px;
-}
+        header {
+            padding: 40px 0;
+            text-align: center;
+        }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-}
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            color: var(--accent-color);
+        }
 
-.card {
-  cursor: pointer;
-}
+        /* Müzik Grid Yapısı */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.card img {
-  width: 100%;
-  border-radius: 10px;
-}
+        /* Şarkı Kartı Tasarımı */
+        .track-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
 
-.player {
-  margin-top: 40px;
-}
-</style>
+        .track-card:hover {
+            background: #282828;
+            transform: translateY(-5px);
+        }
+
+        .album-art {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 4px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+        }
+
+        .track-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-info p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Kontrol Butonları */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-download {
+            background: transparent;
+            border: 1px solid var(--text-dim);
+            color: var(--text-main);
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-download:hover {
+            background: var(--text-main);
+            color: black;
+        }
+
+        audio {
+            width: 100%;
+            height: 30px;
+            filter: invert(100%) hue-rotate(180deg) brightness(1.5);
+        }
+
+        /* Responsive Ayar */
+        @media (max-width: 600px) {
+            .music-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+<header>
+    <h1>CHICAGO BLUES LAB</h1>
+    <p style="color: var(--text-dim);">Digital Music Archive</p>
+</header>
 
-<h1>Chicago Blues Lab</h1>
+<div class="music-grid">
+    
+    <div class="track-card">
+        <img src="cover.jpg" alt="Albüm Kapağı" class="album-art">
+        <div class="track-info">
+            <h3>Track One</h3>
+            <p>BornEcho Music</p>
+        </div>
+        <div class="controls">
+            <audio controls>
+                <source src="track1.mp3" type="audio/mpeg">
+                Tarayıcınız ses öğesini desteklemiyor.
+            </audio>
+            <a href="track1.mp3" download class="btn-download">Şarkıyı İndir (.mp3)</a>
+        </div>
+    </div>
 
-<div class="grid" id="grid"></div>
-
-<div class="player">
-  <h2 id="title"></h2>
-  <audio controls id="audio"></audio>
-</div>
-
-</div>
-
-<script>
-
-// 🔥 SADECE BURAYA ŞARKI EKLEYECEKSİN
-const tracks = [
-  {
-    title: "Midnight Blues Guitar",
-    audio: "track1.mp3",
-    cover: "cover.jpg"
-  }
-];
-
-// ---------------------------------
-
-const grid = document.getElementById("grid");
-const audio = document.getElementById("audio");
-const title = document.getElementById("title");
-
-tracks.forEach(track => {
-
-  const div = document.createElement("div");
-  div.className = "card";
-
-  div.innerHTML = `
-    <img src="${track.cover}">
-    <p>${track.title}</p>
-  `;
-
-  div.onclick = () => {
-    audio.src = track.audio;
-    title.innerText = track.title;
-    audio.play();
-  };
-
-  grid.appendChild(div);
-});
-
-</script>
+    </div>
 
 </body>
 </html>
