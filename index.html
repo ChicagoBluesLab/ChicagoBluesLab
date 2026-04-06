@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,15 +13,16 @@
       margin: 0;
       min-height: 100vh;
       font-family: Arial, sans-serif;
-      color: #fff;
       background: #000;
+      color: #fff;
       overflow-x: hidden;
     }
 
     .bg {
       position: fixed;
       inset: 0;
-      background: url('cover1.jpg') center center / cover no-repeat;
+      background-size: cover;
+      background-position: center;
       filter: blur(36px) brightness(0.18);
       transform: scale(1.12);
       z-index: -2;
@@ -32,7 +33,7 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(circle at center, rgba(255, 0, 60, 0.08), transparent 35%),
+        radial-gradient(circle at center, rgba(255,0,60,0.08), transparent 35%),
         linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.88));
       z-index: -1;
     }
@@ -57,7 +58,7 @@
     }
 
     .headline {
-      margin: 10px 0 10px;
+      margin: 10px 0;
       font-size: 48px;
       line-height: 1.05;
       font-weight: 800;
@@ -198,7 +199,7 @@
       text-decoration: none;
       font-weight: 700;
       font-size: 15px;
-      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
     .btn:hover {
@@ -270,75 +271,30 @@
     <div class="hero">
       <p class="brand">Chicago Blues Lab</p>
       <h1 class="headline">Midnight Blues Collection</h1>
-      <p class="sub">
-        Slow emotional blues for late night souls. Choose a track below and play it instantly.
-      </p>
+      <p class="sub">Slow emotional blues for late night souls. Choose a track below and play it instantly.</p>
     </div>
 
     <div class="section-title">Latest Tracks</div>
-
-    <div class="track-grid" id="trackGrid">
-      <div class="track-card active"
-           data-title="Midnight Blues Guitar"
-           data-artist="Chicago Blues Lab"
-           data-desc="Slow emotional blues for late night souls."
-           data-audio="track1.mp3"
-           data-cover="cover1.jpg"
-           data-youtube="https://www.youtube.com/">
-        <img src="cover1.jpg" alt="Midnight Blues Guitar cover" class="track-cover">
-        <div class="track-info">
-          <p class="track-name">Midnight Blues Guitar</p>
-          <p class="track-meta">Chicago Blues Lab</p>
-        </div>
-      </div>
-
-      <div class="track-card"
-           data-title="Dark Night Blues"
-           data-artist="Chicago Blues Lab"
-           data-desc="Moody late night blues with a darker, cinematic edge."
-           data-audio="track2.mp3"
-           data-cover="cover2.jpg"
-           data-youtube="https://www.youtube.com/">
-        <img src="cover2.jpg" alt="Dark Night Blues cover" class="track-cover">
-        <div class="track-info">
-          <p class="track-name">Dark Night Blues</p>
-          <p class="track-meta">Chicago Blues Lab</p>
-        </div>
-      </div>
-
-      <div class="track-card"
-           data-title="Lonely Smoke Blues"
-           data-artist="Chicago Blues Lab"
-           data-desc="A lonely barroom blues drifting through midnight smoke."
-           data-audio="track3.mp3"
-           data-cover="cover3.jpg"
-           data-youtube="https://www.youtube.com/">
-        <img src="cover3.jpg" alt="Lonely Smoke Blues cover" class="track-cover">
-        <div class="track-info">
-          <p class="track-name">Lonely Smoke Blues</p>
-          <p class="track-meta">Chicago Blues Lab</p>
-        </div>
-      </div>
-    </div>
+    <div class="track-grid" id="trackGrid"></div>
 
     <div class="player-panel">
       <div>
-        <img src="cover1.jpg" alt="Selected track cover" class="player-cover" id="playerCover">
+        <img src="" alt="Selected track cover" class="player-cover" id="playerCover">
       </div>
 
       <div>
-        <div class="player-text-top" id="playerArtist">Chicago Blues Lab</div>
-        <h2 class="player-title" id="playerTitle">Midnight Blues Guitar</h2>
-        <p class="player-desc" id="playerDesc">Slow emotional blues for late night souls.</p>
+        <div class="player-text-top" id="playerArtist"></div>
+        <h2 class="player-title" id="playerTitle"></h2>
+        <p class="player-desc" id="playerDesc"></p>
 
         <audio controls id="mainAudio" preload="metadata">
-          <source src="track1.mp3" type="audio/mpeg" id="mainSource">
+          <source src="" type="audio/mpeg" id="mainSource">
           Your browser does not support the audio element.
         </audio>
 
         <div class="btn-row">
-          <a href="track1.mp3" download="track1.mp3" class="btn btn-primary" id="downloadBtn">Download Track</a>
-          <a href="https://www.youtube.com/" target="_blank" class="btn btn-secondary" id="youtubeBtn">Watch on YouTube</a>
+          <a href="#" download class="btn btn-primary" id="downloadBtn">Download Track</a>
+          <a href="#" target="_blank" class="btn btn-secondary" id="youtubeBtn">Watch on YouTube</a>
         </div>
 
         <div class="footer-note">Official release page</div>
@@ -347,44 +303,87 @@
   </div>
 
   <script>
-    const cards = document.querySelectorAll('.track-card');
-    const bg = document.getElementById('bg');
-    const cover = document.getElementById('playerCover');
-    const artist = document.getElementById('playerArtist');
-    const title = document.getElementById('playerTitle');
-    const desc = document.getElementById('playerDesc');
-    const source = document.getElementById('mainSource');
-    const audio = document.getElementById('mainAudio');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const youtubeBtn = document.getElementById('youtubeBtn');
+    const tracks = [
+      {
+        title: "Midnight Blues Guitar",
+        artist: "Chicago Blues Lab",
+        desc: "Slow emotional blues for late night souls.",
+        audio: "track1.mp3",
+        cover: "cover1.jpg",
+        youtube: "https://www.youtube.com/"
+      },
+      {
+        title: "Dark Night Blues",
+        artist: "Chicago Blues Lab",
+        desc: "Moody late night blues with a darker, cinematic edge.",
+        audio: "track2.mp3",
+        cover: "cover2.jpg",
+        youtube: "https://www.youtube.com/"
+      },
+      {
+        title: "Lonely Smoke Blues",
+        artist: "Chicago Blues Lab",
+        desc: "A lonely barroom blues drifting through midnight smoke.",
+        audio: "track3.mp3",
+        cover: "cover3.jpg",
+        youtube: "https://www.youtube.com/"
+      }
+    ];
 
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        cards.forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
+    const trackGrid = document.getElementById("trackGrid");
+    const bg = document.getElementById("bg");
+    const cover = document.getElementById("playerCover");
+    const artist = document.getElementById("playerArtist");
+    const title = document.getElementById("playerTitle");
+    const desc = document.getElementById("playerDesc");
+    const source = document.getElementById("mainSource");
+    const audio = document.getElementById("mainAudio");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const youtubeBtn = document.getElementById("youtubeBtn");
 
-        const newTitle = card.dataset.title;
-        const newArtist = card.dataset.artist;
-        const newDesc = card.dataset.desc;
-        const newAudio = card.dataset.audio;
-        const newCover = card.dataset.cover;
-        const newYoutube = card.dataset.youtube;
+    function renderCards() {
+      trackGrid.innerHTML = "";
 
-        title.textContent = newTitle;
-        artist.textContent = newArtist;
-        desc.textContent = newDesc;
-        cover.src = newCover;
-        bg.style.backgroundImage = `url('${newCover}')`;
+      tracks.forEach((track, index) => {
+        const card = document.createElement("div");
+        card.className = "track-card" + (index === 0 ? " active" : "");
 
-        source.src = newAudio;
-        audio.load();
+        card.innerHTML = `
+          <img src="${track.cover}" alt="${track.title} cover" class="track-cover">
+          <div class="track-info">
+            <p class="track-name">${track.title}</p>
+            <p class="track-meta">${track.artist}</p>
+          </div>
+        `;
 
-        downloadBtn.href = newAudio;
-        downloadBtn.setAttribute('download', newAudio);
+        card.addEventListener("click", () => {
+          document.querySelectorAll(".track-card").forEach(c => c.classList.remove("active"));
+          card.classList.add("active");
+          setTrack(track);
+        });
 
-        youtubeBtn.href = newYoutube;
+        trackGrid.appendChild(card);
       });
-    });
+    }
+
+    function setTrack(track) {
+      title.textContent = track.title;
+      artist.textContent = track.artist;
+      desc.textContent = track.desc;
+      cover.src = track.cover;
+      bg.style.backgroundImage = `url('${track.cover}')`;
+
+      source.src = track.audio;
+      audio.load();
+
+      downloadBtn.href = track.audio;
+      downloadBtn.setAttribute("download", track.audio);
+
+      youtubeBtn.href = track.youtube;
+    }
+
+    renderCards();
+    setTrack(tracks[0]);
   </script>
 </body>
 </html>
