@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,56 +12,58 @@
         header { text-align: center; padding: 60px 20px; border-bottom: 1px solid #1a1a1a; background: linear-gradient(to bottom, #0a0a0a, #050505); }
         h1 { color: var(--accent); font-size: 3.5rem; letter-spacing: -3px; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; }
         
-        /* VIP ÜYELİK PANELİ */
+        /* VIP MEMBERSHIP BANNER */
         .vip-banner {
-            background: linear-gradient(45deg, rgba(229, 9, 20, 0.2), rgba(0, 0, 0, 0.8));
-            border: 2px solid var(--accent);
-            padding: 30px;
+            background: linear-gradient(45deg, rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 1));
+            border: 1px solid #222;
+            padding: 25px;
             border-radius: 20px;
-            max-width: 700px;
+            max-width: 650px;
             margin: 20px auto;
             position: relative;
-            overflow: hidden;
-            animation: pulse 2.5s infinite;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(229, 9, 20, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0); }
-        }
-        .vip-banner p { color: #fff; font-size: 1.3rem; margin: 0 0 20px 0; font-weight: 800; letter-spacing: 1px; }
+        .vip-banner:hover { border-color: var(--accent); }
+        .vip-banner p { color: #fff; font-size: 1.1rem; margin: 0 0 15px 0; font-weight: 600; letter-spacing: 0.5px; }
         
         .btn-vip { 
-            background: var(--accent); 
+            background: #111; 
             color: #fff; 
-            padding: 18px 45px; 
-            border-radius: 12px; 
+            padding: 15px 35px; 
+            border-radius: 10px; 
             text-decoration: none; 
-            font-weight: 900; 
+            font-weight: 800; 
             display: inline-block;
-            font-size: 1.2rem;
+            font-size: 1rem;
             transition: 0.3s;
-            box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             text-transform: uppercase;
+            border: 1px solid #333;
         }
-        .btn-vip:hover { transform: translateY(-3px); background: #ff0f1b; box-shadow: 0 15px 30px rgba(229, 9, 20, 0.7); }
+        .btn-vip:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.2); }
 
         .container { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
         .track-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #1f1f1f; transition: 0.3s; position: relative; }
         .track-card.playing { border-color: var(--accent); box-shadow: 0 0 20px rgba(229, 9, 20, 0.3); }
+        .track-card:hover { border-color: #333; }
+        
         .album-art { width: 100%; aspect-ratio: 1/1; border-radius: 10px; object-fit: cover; margin-bottom: 15px; }
         h3 { margin: 10px 0 5px 0; font-size: 1.1rem; color: #fff; }
-        audio { width: 100%; height: 35px; filter: invert(1); margin-bottom: 15px; }
-        .dl-btn { display: block; text-align: center; background: #1a1a1a; color: #fff; padding: 12px; text-decoration: none; border-radius: 8px; font-size: 0.85rem; border: 1px solid #333; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; }
-        .dl-btn:hover { background: var(--accent); border-color: var(--accent); }
+        audio { width: 100%; height: 35px; filter: invert(1); margin-bottom: 15px; opacity: 0.7; transition: 0.3s; }
+        audio:hover { opacity: 1; }
+        
+        /* DIRECT DOWNLOAD BUTTON */
+        .dl-btn { display: block; text-align: center; background: var(--accent); color: #fff; padding: 12px; text-decoration: none; border-radius: 8px; font-size: 0.85rem; border: none; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; }
+        .dl-btn:hover { background: #ff0f1b; transform: scale(1.02); box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3); }
 
-        /* MODAL */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); }
-        .modal-content { background: #000; margin: 10% auto; padding: 40px; border: 1px solid var(--accent); width: 85%; max-width: 500px; border-radius: 30px; text-align: center; }
-        .btn-modal-sub { background: #fff; color: #000; padding: 15px; border-radius: 10px; display: block; text-decoration: none; font-weight: 800; margin-bottom: 15px; }
-        .btn-modal-join { background: var(--accent); color: #fff; padding: 15px; border-radius: 10px; display: block; text-decoration: none; font-weight: 800; margin-bottom: 20px; }
-        .btn-free { background: transparent; color: #444; border: none; cursor: pointer; text-decoration: underline; font-size: 0.85rem; }
+        /* SUPPORT NOTE */
+        .thanks-note {
+            display: block; text-align: center; font-size: 0.7rem; color: #444; margin-top: 10px; font-weight: 500; line-height: 1.4;
+        }
+        .thanks-note a { color: var(--accent); text-decoration: none; font-weight: 700; transition: 0.3s; }
+        .thanks-note a:hover { color: #fff; }
     </style>
 </head>
 <body>
@@ -70,32 +72,15 @@
     <h1>CHICAGO BLUES LAB</h1>
     
     <div class="vip-banner">
-        <p>⭐ ÖZEL İÇERİKLER VE DESTEK İÇİN</p>
+        <p>Support our archive and get exclusive content</p>
         <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="btn-vip">
-            YOUTUBE ÜYESİ OL (KATIL)
+            💎 JOIN ON YOUTUBE (MEMBERSHIP)
         </a>
     </div>
 </header>
 
 <div class="container">
     <div class="music-grid" id="gallery"></div>
-</div>
-
-<div id="supportModal" class="modal">
-    <div class="modal-content">
-        <h2 style="color: var(--accent); margin-top: 0; font-size: 2rem; font-weight: 900;">EMEK DESTEĞİ 🎸</h2>
-        <p style="color: #ccc; line-height: 1.6; margin-bottom: 25px;">Müzikleri indirmeden önce bize nasıl destek olmak istersin?</p>
-        
-        <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="btn-modal-sub">
-            🔔 ÜCRETSİZ ABONE OL
-        </a>
-
-        <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="btn-modal-join">
-            💎 VIP ÜYE OL (KATIL)
-        </a>
-
-        <button onclick="confirmDownload()" class="btn-free">Zaten Destekçiyim / Dosyayı İndir</button>
-    </div>
 </div>
 
 <script>
@@ -106,7 +91,6 @@
         "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"
     ];
 
-    let dlUrl = "", dlName = "";
     const gallery = document.getElementById('gallery');
 
     songFiles.forEach((name, index) => {
@@ -115,11 +99,14 @@
             <div class="track-card" id="card-${index}">
                 <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
                 <h3>${displayName}</h3>
-                <span style="font-size: 0.75rem; color: #444; margin-bottom: 15px; display: block; text-transform: uppercase; font-weight: bold;">BornEcho Original</span>
+                <span style="font-size: 0.7rem; color: #333; margin-bottom: 15px; display: block; text-transform: uppercase; font-weight: bold;">BornEcho Original</span>
                 <audio id="audio-${index}" controls onplay="syncHighlight(${index})" onended="playNext(${index})">
                     <source src="${name}.mp3" type="audio/mpeg">
                 </audio>
-                <button onclick="askSupport('${name}.mp3', '${displayName}')" class="dl-btn">Download MP3</button>
+                
+                <a href="${name}.mp3" download="${displayName}.mp3" class="dl-btn">Download MP3</a>
+                
+                <span class="thanks-note">Enjoy the music! Please <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank">Subscribe</a> to support our work.</span>
             </div>
         `;
     });
@@ -139,18 +126,6 @@
         document.getElementById(`card-${index}`).classList.add('playing');
         document.querySelectorAll('audio').forEach((audio, i) => { if (i !== index) { audio.pause(); audio.currentTime = 0; } });
     }
-
-    function askSupport(url, name) { 
-        dlUrl = url; dlName = name; 
-        document.getElementById('supportModal').style.display = "block"; 
-    }
-
-    function confirmDownload() { 
-        const a = document.createElement('a'); a.href = dlUrl; a.download = dlName; a.click(); 
-        document.getElementById('supportModal').style.display = "none"; 
-    }
-
-    window.onclick = function(event) { if (event.target == document.getElementById('supportModal')) { document.getElementById('supportModal').style.display = "none"; } }
 </script>
 </body>
 </html>
