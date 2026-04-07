@@ -3,56 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chicago Blues Lab | Digital Archive</title>
+    <title>Chicago Blues Lab | Archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050505; --card: #121212; --accent: #e50914; --text: #fff; --text-dim: #a7a7a7; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 20px; }
-        header { text-align: center; padding: 60px 0; border-bottom: 1px solid #1a1a1a; margin-bottom: 40px; }
-        h1 { color: var(--accent); font-size: 2.8rem; letter-spacing: -2px; font-weight: 700; text-transform: uppercase; }
-        .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; max-width: 1400px; margin: 0 auto; }
-        .track-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #1f1f1f; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .track-card:hover { transform: translateY(-8px) scale(1.02); border-color: #333; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .album-art { width: 100%; aspect-ratio: 1/1; border-radius: 10px; object-fit: cover; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h3 { margin: 0; font-size: 1.1rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        p { color: var(--text-dim); font-size: 0.85rem; margin: 8px 0 20px 0; font-weight: 300; }
-        audio { width: 100%; height: 35px; filter: invert(1) brightness(1.5); margin-bottom: 15px; }
-        .btn-download { display: block; text-align: center; padding: 12px; background: #222; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: 0.3s; border: 1px solid #333; }
-        .btn-download:hover { background: var(--accent); border-color: var(--accent); box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4); }
+        header { text-align: center; padding: 40px 0; border-bottom: 1px solid #1a1a1a; margin-bottom: 40px; }
+        h1 { color: var(--accent); font-size: 2.2rem; letter-spacing: -1px; text-transform: uppercase; margin: 0; }
+        .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; max-width: 1400px; margin: 0 auto; }
+        .track-card { background: var(--card); padding: 18px; border-radius: 12px; border: 1px solid #1f1f1f; transition: 0.3s; }
+        .album-art { width: 100%; aspect-ratio: 1/1; border-radius: 8px; object-fit: cover; margin-bottom: 12px; }
+        h3 { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #eee; height: 2.8em; overflow: hidden; }
+        audio { width: 100%; height: 35px; filter: invert(1); margin: 10px 0; }
+        .dl-btn { display: block; text-align: center; background: #222; color: #fff; padding: 10px; text-decoration: none; border-radius: 6px; font-size: 0.85rem; border: 1px solid #333; font-weight: 600; }
+        .dl-btn:hover { background: var(--accent); border-color: var(--accent); }
     </style>
 </head>
 <body>
 
 <header>
     <h1>CHICAGO BLUES LAB</h1>
-    <p>Official Digital Archive & High Quality Downloads</p>
+    <p style="color: var(--text-dim); font-size: 0.9rem;">Official Digital Archive & High Quality Downloads</p>
 </header>
 
 <div class="music-grid" id="gallery"></div>
 
 <script>
-    // --- BURAYA SADECE DOSYA ADINI (UZANTISIZ) EKLE ---
-    const fileNames = [
+    // --- MANUEL EKLEME BÖLÜMÜ ---
+    // Buraya sadece yeni yüklediğin dosya adlarını (uzantısız) ekle kanka
+    const songList = [
+        "Midnight Fuel",
+        "Shadow Riff",
         "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"
     ];
 
     const gallery = document.getElementById('gallery');
 
-    fileNames.forEach(name => {
-        // Başlığı temizleme: Tireleri ve alt tireleri boşluk yapar
-        let cleanTitle = name.replace(/[–\-_]/g, ' ');
-        // Sonda kalan "2026" gibi rakamları temizlemek istersen başlık daha şık durur
-        cleanTitle = cleanTitle.replace(/2026/g, '').trim();
-        
+    songList.forEach(name => {
         const card = `
             <div class="track-card">
-                <img src="${name}.jpg" onerror="this.src='cover.jpg'" class="album-art">
-                <div class="track-info">
-                    <h3>${cleanTitle}</h3>
-                    <p>BornEcho Music Original</p>
-                </div>
+                <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
+                <h3>${name.replace(/_/g, ' ')}</h3>
                 <audio controls><source src="${name}.mp3" type="audio/mpeg"></audio>
-                <a href="${name}.mp3" download="${cleanTitle}" class="btn-download">Download MP3</a>
+                <a href="${name}.mp3" download class="dl-btn">Download MP3</a>
             </div>
         `;
         gallery.innerHTML += card;
