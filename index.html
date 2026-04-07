@@ -9,76 +9,62 @@
         :root { --bg: #000; --card: #141414; --accent: #e50914; --text: #fff; --sub-text: #666; --btn-bg: #1f1f1f; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        header { text-align: left; padding: 25px 4%; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent); position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; }
-        h1 { color: var(--accent); font-size: 2.5rem; letter-spacing: -2px; margin: 0; text-transform: uppercase; font-weight: 900; }
-        .sub-call { color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: 900; letter-spacing: 1.5px; transition: 0.3s; margin-top: 8px; text-transform: uppercase; text-shadow: 0px 0px 12px rgba(229, 9, 20, 0.6); }
-        .sub-call:hover { color: var(--accent); transform: scale(1.05); }
+        header { text-align: left; padding: 20px 4%; background: #000; position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; border-bottom: 1px solid #1a1a1a; }
+        h1 { color: var(--accent); font-size: 1.5rem; letter-spacing: -1px; margin: 0; text-transform: uppercase; font-weight: 900; }
+        .sub-call { color: #888; text-decoration: none; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; display: block; margin-top: 4px; }
 
-        .main-container { padding: 160px 4% 60px 4%; }
-        .category-row { margin-bottom: 50px; }
-        .category-title { color: #fff; font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
-        .track-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 25px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-        .track-list::-webkit-scrollbar { height: 4px; }
-        .track-list::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-
-        .track-card { flex: 0 0 calc(20% - 12px); min-width: 260px; background: var(--card); border-radius: 8px; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; border: 1px solid #1a1a1a; cursor: pointer; display: flex; flex-direction: column; }
-        .track-card:hover { transform: scale(1.06); z-index: 10; border-color: #555; }
-        .track-card.playing { border: 2px solid var(--accent); }
-
-        .album-art-wrap { width: 100%; aspect-ratio: 16/9; position: relative; overflow: hidden; }
-        .album-art { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .track-card:hover .album-art { transform: scale(1.03); }
-
-        .card-meta { padding: 15px 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; justify-content: space-between; }
-        .meta-text { display: flex; flex-direction: column; gap: 3px; }
-        h3 { margin: 0; font-size: 1rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .meta-sub { font-size: 0.75rem; color: var(--sub-text); font-weight: 600; text-transform: uppercase; }
-
-        .card-actions { display: flex; gap: 10px; width: 100%; }
-        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: none; border-radius: 4px; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.2s; white-space: nowrap; }
-        .play-btn { background: var(--accent); color: #fff; }
-        .play-btn:hover { background: #ff0f1b; box-shadow: 0 0 15px rgba(229, 9, 20, 0.4); }
-        .dl-btn { background: var(--btn-bg); color: #ccc; border: 1px solid #333; }
-        .dl-btn:hover { background: #333; color: #fff; border-color: #555; }
-
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); }
-        .modal-content { background: #000; margin: 12% auto; padding: 45px; border: 1px solid #333; width: 90%; max-width: 420px; border-radius: 25px; text-align: center; border-bottom: 6px solid var(--accent); box-shadow: 0 20px 50px rgba(0,0,0,1); }
-        .modal-content h2 { color: #fff; margin-bottom: 30px; font-weight: 900; font-size: 2rem; letter-spacing: -1px; }
-        .support-option { display: block; text-decoration: none; padding: 20px; border-radius: 12px; margin-bottom: 15px; font-weight: 900; transition: 0.3s; font-size: 1.15rem; text-transform: uppercase; }
-        .opt-membership { background: var(--accent); color: #fff; }
-        .opt-free { background: transparent; color: #888; border: 1px solid #444; font-weight: 600; font-size: 0.9rem; margin-top: 10px; }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .sub-call { font-size: 0.8rem; }
-            .main-container { padding: 140px 4% 60px 4%; }
-            .category-title { font-size: 1.2rem; }
-            .track-card { flex: 0 0 160px; min-width: 160px; }
-            .card-meta { padding: 10px; }
-            h3 { font-size: 0.8rem; }
-            .meta-sub { font-size: 0.6rem; }
-            .action-btn { padding: 8px; font-size: 0.6rem; }
-
-            .modal-content {
-                margin: 30% auto !important;
-                width: 60% !important;
-                max-width: 280px !important;
-                padding: 20px !important;
-                border-radius: 15px !important;
-            }
-            .modal-content h2 { font-size: 1.1rem !important; margin-bottom: 15px !important; }
-            .support-option { padding: 12px !important; font-size: 0.8rem !important; border-radius: 8px !important; }
-            .opt-free { font-size: 0.7rem !important; margin-top: 5px !important; }
+        .main-container { padding: 100px 2% 40px 2%; } /* Kenar boşluklarını iyice azalttık */
+        .category-row { margin-bottom: 30px; }
+        .category-title { color: #fff; font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 5px; text-transform: uppercase; border-left: 3px solid var(--accent); padding-left: 10px; }
+        
+        /* MASAÜSTÜ İÇİN YİNE YAN YANA AMA MOBİLDE DEĞİŞECEK */
+        .track-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 5px; /* Aradaki mesafeyi sıfıra yaklaştırdık */
         }
+
+        .track-card { background: var(--card); overflow: hidden; transition: 0.3s; position: relative; display: flex; flex-direction: column; border: 1px solid #000; }
+        .track-card.playing { border: 1px solid var(--accent); }
+
+        .album-art-wrap { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; } /* Kare yaparak daha çok sığdırdık */
+        .album-art { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-meta { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+        h3 { margin: 0; font-size: 0.75rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .meta-sub { font-size: 0.6rem; color: var(--sub-text); font-weight: 600; text-transform: uppercase; }
+
+        .card-actions { display: flex; gap: 4px; width: 100%; margin-top: 5px; }
+        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; padding: 8px 2px; border: none; border-radius: 2px; font-size: 0.55rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .play-btn { background: var(--accent); color: #fff; }
+        .dl-btn { background: var(--btn-bg); color: #ccc; border: 1px solid #333; }
+
+        /* MOBİL - 2 SIRA VE AŞAĞI DOĞRU AKIŞ AYARI */
+        @media (max-width: 768px) {
+            .track-list { 
+                grid-template-columns: repeat(2, 1fr) !important; /* Kesin olarak 2 yan yana sütun */
+                gap: 2px !important; /* Neredeyse bitişik */
+            }
+            .main-container { padding: 90px 1% 40px 1%; }
+            .track-card { border-radius: 0; } /* Daha bitişik durması için köşeleri sıfırladık */
+            h1 { font-size: 1.2rem; }
+            .category-title { font-size: 0.9rem; }
+        }
+
+        /* MODAL AYARI (Aynı Kalanlar) */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
+        .modal-content { background: #000; margin: 30% auto; padding: 20px; border: 1px solid #333; width: 70%; max-width: 280px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--accent); }
+        .modal-content h2 { color: #fff; margin-bottom: 15px; font-weight: 900; font-size: 1.1rem; }
+        .support-option { display: block; text-decoration: none; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; }
+        .opt-membership { background: var(--accent); color: #fff; }
+        .opt-free { background: transparent; color: #666; border: 1px solid #333; font-size: 0.7rem; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>CHICAGO BLUES LAB</h1>
-    <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="sub-call">
-        Support us by subscribing on YouTube
-    </a>
+    <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="sub-call">Support on YouTube</a>
 </header>
 
 <div class="main-container" id="main-content"></div>
@@ -86,34 +72,17 @@
 <div id="downloadModal" class="modal">
     <div class="modal-content">
         <h2>SUPPORT & DOWNLOAD</h2>
-        <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="support-option opt-membership" onclick="closeModal()">
-            ⭐ JOIN ON YOUTUBE (MEMBERSHIP)
-        </a>
-        <a href="#" id="directDownloadLink" class="support-option opt-free" onclick="closeModal()">
-            Free Download
-        </a>
+        <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="support-option opt-membership" onclick="closeModal()">⭐ JOIN ON YOUTUBE</a>
+        <a href="#" id="directDownloadLink" class="support-option opt-free" onclick="closeModal()">Free Download</a>
     </div>
 </div>
 
 <script>
-    // BURASI LİSTE: Sorrow'u en başa ekledim kanka.
     const musicArchive = [
-        {
-            category: "Latest Release",
-            tracks: ["Sorrow"]
-        },
-        {
-            category: "Deep & Mysterious",
-            tracks: ["Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle", "Dark Bourbon"]
-        },
-        {
-            category: "Emotional Blues For You",
-            tracks: ["Deep Velvet", "Gravel Voice", "Lost Highway", "Midnight Fuel", "Neon Noir"]
-        },
-        {
-            category: "Romantic Night Sessions",
-            tracks: ["Shadow Riff", "Soul Whisper", "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"]
-        }
+        { category: "Latest Release", tracks: ["Sorrow"] },
+        { category: "Deep & Mysterious", tracks: ["Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle", "Dark Bourbon"] },
+        { category: "Emotional Blues For You", tracks: ["Deep Velvet", "Gravel Voice", "Lost Highway", "Midnight Fuel", "Neon Noir"] },
+        { category: "Romantic Night Sessions", tracks: ["Shadow Riff", "Soul Whisper", "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"] }
     ];
 
     const container = document.getElementById('main-content');
@@ -122,43 +91,28 @@
     let totalTracks = 0;
 
     musicArchive.forEach((cat) => {
-        let catHtml = `
-            <div class="category-row">
-                <div class="category-title">${cat.category}</div>
-                <div class="track-list">
-        `;
-
+        let catHtml = `<div class="category-row"><div class="category-title">${cat.category}</div><div class="track-list">`;
         cat.tracks.forEach((name) => {
             const currentTotalIndex = totalTracks;
             const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
-            
             catHtml += `
-                <div class="track-card" id="card-${currentTotalIndex}" >
+                <div class="track-card" id="card-${currentTotalIndex}">
                     <div class="album-art-wrap" onclick="togglePlay(${currentTotalIndex})">
                         <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
                     </div>
                     <div class="card-meta">
-                        <div class="meta-text">
-                            <h3>${displayName}</h3>
-                            <div class="meta-sub">BornEcho Original Production</div>
-                        </div>
+                        <div class="meta-text"><h3>${displayName}</h3><div class="meta-sub">BornEcho Original</div></div>
                         <div class="card-actions">
                             <button class="action-btn play-btn" id="play-btn-${currentTotalIndex}" onclick="togglePlay(${currentTotalIndex})">
-                                <span class="play-icon" id="play-icon-${currentTotalIndex}">▶</span>
+                                <span id="play-icon-${currentTotalIndex}">▶</span>
                             </button>
-                            <button class="action-btn dl-btn" onclick="openDownloadMenu('${name}.mp3', '${displayName}')">
-                                <span>⬇</span> FREE DOWNLOAD
-                            </button>
+                            <button class="action-btn dl-btn" onclick="openDownloadMenu('${name}.mp3', '${displayName}')">⬇ FREE</button>
                         </div>
                     </div>
-                    <audio id="audio-${currentTotalIndex}" preload="none" onended="playNext(${currentTotalIndex})">
-                        <source src="${name}.mp3" type="audio/mpeg">
-                    </audio>
-                </div>
-            `;
+                    <audio id="audio-${currentTotalIndex}" preload="none" onended="playNext(${currentTotalIndex})"><source src="${name}.mp3" type="audio/mpeg"></audio>
+                </div>`;
             totalTracks++;
         });
-
         catHtml += `</div></div>`;
         container.innerHTML += catHtml;
     });
@@ -167,39 +121,15 @@
         const audio = document.getElementById(`audio-${index}`);
         const card = document.getElementById(`card-${index}`);
         const icon = document.getElementById(`play-icon-${index}`);
-
         if (audio.paused) {
-            document.querySelectorAll('audio').forEach((a, i) => { 
-                if (i !== index) { 
-                    a.pause(); 
-                    a.currentTime = 0; 
-                    const otherIcon = document.getElementById(`play-icon-${i}`);
-                    if(otherIcon) otherIcon.innerText = '▶'; 
-                    const otherCard = document.getElementById(`card-${i}`);
-                    if(otherCard) otherCard.classList.remove('playing'); 
-                } 
-            });
-            audio.play();
-            icon.innerText = '⏸';
-            card.classList.add('playing');
-        } else {
-            audio.pause();
-            icon.innerText = '▶';
-            card.classList.remove('playing');
-        }
+            document.querySelectorAll('audio').forEach((a, i) => { if (i !== index) { a.pause(); a.currentTime = 0; if(document.getElementById(`play-icon-${i}`)) document.getElementById(`play-icon-${i}`).innerText = '▶'; if(document.getElementById(`card-${i}`)) document.getElementById(`card-${i}`).classList.remove('playing'); } });
+            audio.play(); icon.innerText = '⏸'; card.classList.add('playing');
+        } else { audio.pause(); icon.innerText = '▶'; card.classList.remove('playing'); }
     }
-
     function openDownloadMenu(file, name) { directLink.href = file; directLink.download = name + ".mp3"; modal.style.display = "block"; }
     function closeModal() { modal.style.display = "none"; }
-    window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
-
-    function playNext(currentIndex) {
-        let nextIndex = currentIndex + 1;
-        if (nextIndex >= totalTracks) nextIndex = 0;
-        togglePlay(nextIndex);
-        const nextCard = document.getElementById(`card-${nextIndex}`);
-        if(nextCard) nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); 
-    }
+    window.onclick = function(event) { if (event.target == modal) closeModal(); }
+    function playNext(currentIndex) { let nextIndex = (currentIndex + 1) >= totalTracks ? 0 : currentIndex + 1; togglePlay(nextIndex); }
 </script>
 </body>
 </html>
