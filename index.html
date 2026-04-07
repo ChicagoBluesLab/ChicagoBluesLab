@@ -13,48 +13,44 @@
         h1 { color: var(--accent); font-size: 1.5rem; letter-spacing: -1px; margin: 0; text-transform: uppercase; font-weight: 900; }
         .sub-call { color: #888; text-decoration: none; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; display: block; margin-top: 4px; }
 
-        .main-container { padding: 100px 2% 40px 2%; } /* Kenar boşluklarını iyice azalttık */
-        .category-row { margin-bottom: 30px; }
-        .category-title { color: #fff; font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 5px; text-transform: uppercase; border-left: 3px solid var(--accent); padding-left: 10px; }
-        
-        /* MASAÜSTÜ İÇİN YİNE YAN YANA AMA MOBİLDE DEĞİŞECEK */
+        .main-container { padding: 100px 2% 40px 2%; max-width: 1600px; margin: 0 auto; } 
+
+        /* GRID SİSTEMİ - PC'de boşlukları doldurur, mobilde 2'li yapar */
         .track-list { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-            gap: 5px; /* Aradaki mesafeyi sıfıra yaklaştırdık */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 10px; 
         }
 
-        .track-card { background: var(--card); overflow: hidden; transition: 0.3s; position: relative; display: flex; flex-direction: column; border: 1px solid #000; }
+        .track-card { background: var(--card); overflow: hidden; transition: 0.3s; position: relative; display: flex; flex-direction: column; border: 1px solid #1a1a1a; border-radius: 4px; }
+        .track-card:hover { border-color: #333; transform: translateY(-2px); }
         .track-card.playing { border: 1px solid var(--accent); }
 
-        .album-art-wrap { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; } /* Kare yaparak daha çok sığdırdık */
+        .album-art-wrap { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; cursor: pointer; }
         .album-art { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-meta { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
-        h3 { margin: 0; font-size: 0.75rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .meta-sub { font-size: 0.6rem; color: var(--sub-text); font-weight: 600; text-transform: uppercase; }
+        .card-meta { padding: 10px; display: flex; flex-direction: column; gap: 5px; }
+        h3 { margin: 0; font-size: 0.85rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .meta-sub { font-size: 0.65rem; color: var(--sub-text); font-weight: 600; text-transform: uppercase; }
 
-        .card-actions { display: flex; gap: 4px; width: 100%; margin-top: 5px; }
-        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; padding: 8px 2px; border: none; border-radius: 2px; font-size: 0.55rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .card-actions { display: flex; gap: 5px; width: 100%; margin-top: 5px; }
+        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 2px; border: none; border-radius: 3px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
         .play-btn { background: var(--accent); color: #fff; }
         .dl-btn { background: var(--btn-bg); color: #ccc; border: 1px solid #333; }
 
-        /* MOBİL - 2 SIRA VE AŞAĞI DOĞRU AKIŞ AYARI */
+        /* MOBİL AYARLAR */
         @media (max-width: 768px) {
             .track-list { 
-                grid-template-columns: repeat(2, 1fr) !important; /* Kesin olarak 2 yan yana sütun */
-                gap: 2px !important; /* Neredeyse bitişik */
+                grid-template-columns: repeat(2, 1fr) !important; 
+                gap: 5px !important; 
             }
             .main-container { padding: 90px 1% 40px 1%; }
-            .track-card { border-radius: 0; } /* Daha bitişik durması için köşeleri sıfırladık */
-            h1 { font-size: 1.2rem; }
-            .category-title { font-size: 0.9rem; }
+            .action-btn { padding: 8px 2px; font-size: 0.55rem; }
         }
 
-        /* MODAL AYARI (Aynı Kalanlar) */
+        /* MODAL (Aynı Kalanlar) */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
         .modal-content { background: #000; margin: 30% auto; padding: 20px; border: 1px solid #333; width: 70%; max-width: 280px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--accent); }
-        .modal-content h2 { color: #fff; margin-bottom: 15px; font-weight: 900; font-size: 1.1rem; }
         .support-option { display: block; text-decoration: none; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; }
         .opt-membership { background: var(--accent); color: #fff; }
         .opt-free { background: transparent; color: #666; border: 1px solid #333; font-size: 0.7rem; }
@@ -67,54 +63,52 @@
     <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="sub-call">Support on YouTube</a>
 </header>
 
-<div class="main-container" id="main-content"></div>
+<div class="main-container">
+    <div class="track-list" id="musicGrid"></div>
+</div>
 
 <div id="downloadModal" class="modal">
     <div class="modal-content">
-        <h2>SUPPORT & DOWNLOAD</h2>
+        <h2 style="color:#fff; font-size:1rem; margin-bottom:15px;">SUPPORT & DOWNLOAD</h2>
         <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="support-option opt-membership" onclick="closeModal()">⭐ JOIN ON YOUTUBE</a>
         <a href="#" id="directDownloadLink" class="support-option opt-free" onclick="closeModal()">Free Download</a>
     </div>
 </div>
 
 <script>
-    const musicArchive = [
-        { category: "Latest Release", tracks: ["Sorrow"] },
-        { category: "Deep & Mysterious", tracks: ["Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle", "Dark Bourbon"] },
-        { category: "Emotional Blues For You", tracks: ["Deep Velvet", "Gravel Voice", "Lost Highway", "Midnight Fuel", "Neon Noir"] },
-        { category: "Romantic Night Sessions", tracks: ["Shadow Riff", "Soul Whisper", "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"] }
+    // TÜM ŞARKILAR TEK LİSTEDE - PC'de yan yana dizilirler
+    const tracks = [
+        "Sorrow", "Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle", 
+        "Dark Bourbon", "Deep Velvet", "Gravel Voice", "Lost Highway", "Midnight Fuel", 
+        "Neon Noir", "Shadow Riff", "Soul Whisper", 
+        "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"
     ];
 
-    const container = document.getElementById('main-content');
+    const grid = document.getElementById('musicGrid');
     const modal = document.getElementById('downloadModal');
     const directLink = document.getElementById('directDownloadLink');
-    let totalTracks = 0;
 
-    musicArchive.forEach((cat) => {
-        let catHtml = `<div class="category-row"><div class="category-title">${cat.category}</div><div class="track-list">`;
-        cat.tracks.forEach((name) => {
-            const currentTotalIndex = totalTracks;
-            const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
-            catHtml += `
-                <div class="track-card" id="card-${currentTotalIndex}">
-                    <div class="album-art-wrap" onclick="togglePlay(${currentTotalIndex})">
-                        <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
-                    </div>
-                    <div class="card-meta">
-                        <div class="meta-text"><h3>${displayName}</h3><div class="meta-sub">BornEcho Original</div></div>
-                        <div class="card-actions">
-                            <button class="action-btn play-btn" id="play-btn-${currentTotalIndex}" onclick="togglePlay(${currentTotalIndex})">
-                                <span id="play-icon-${currentTotalIndex}">▶</span>
-                            </button>
-                            <button class="action-btn dl-btn" onclick="openDownloadMenu('${name}.mp3', '${displayName}')">⬇ FREE</button>
-                        </div>
-                    </div>
-                    <audio id="audio-${currentTotalIndex}" preload="none" onended="playNext(${currentTotalIndex})"><source src="${name}.mp3" type="audio/mpeg"></audio>
-                </div>`;
-            totalTracks++;
-        });
-        catHtml += `</div></div>`;
-        container.innerHTML += catHtml;
+    tracks.forEach((name, index) => {
+        const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
+        const card = document.createElement('div');
+        card.className = 'track-card';
+        card.id = `card-${index}`;
+        card.innerHTML = `
+            <div class="album-art-wrap" onclick="togglePlay(${index})">
+                <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
+            </div>
+            <div class="card-meta">
+                <div class="meta-text"><h3>${displayName}</h3><div class="meta-sub">BornEcho Original</div></div>
+                <div class="card-actions">
+                    <button class="action-btn play-btn" id="play-btn-${index}" onclick="togglePlay(${index})">
+                        <span id="play-icon-${index}">▶</span>
+                    </button>
+                    <button class="action-btn dl-btn" onclick="openDownloadMenu('${name}.mp3', '${displayName}')">⬇ FREE</button>
+                </div>
+            </div>
+            <audio id="audio-${index}" preload="none" onended="playNext(${index})"><source src="${name}.mp3" type="audio/mpeg"></audio>
+        `;
+        grid.appendChild(card);
     });
 
     function togglePlay(index) {
@@ -122,14 +116,16 @@
         const card = document.getElementById(`card-${index}`);
         const icon = document.getElementById(`play-icon-${index}`);
         if (audio.paused) {
-            document.querySelectorAll('audio').forEach((a, i) => { if (i !== index) { a.pause(); a.currentTime = 0; if(document.getElementById(`play-icon-${i}`)) document.getElementById(`play-icon-${i}`).innerText = '▶'; if(document.getElementById(`card-${i}`)) document.getElementById(`card-${i}`).classList.remove('playing'); } });
+            document.querySelectorAll('audio').forEach((a, i) => { 
+                if (i !== index) { a.pause(); a.currentTime = 0; if(document.getElementById(`play-icon-${i}`)) document.getElementById(`play-icon-${i}`).innerText = '▶'; if(document.getElementById(`card-${i}`)) document.getElementById(`card-${i}`).classList.remove('playing'); } 
+            });
             audio.play(); icon.innerText = '⏸'; card.classList.add('playing');
         } else { audio.pause(); icon.innerText = '▶'; card.classList.remove('playing'); }
     }
     function openDownloadMenu(file, name) { directLink.href = file; directLink.download = name + ".mp3"; modal.style.display = "block"; }
     function closeModal() { modal.style.display = "none"; }
     window.onclick = function(event) { if (event.target == modal) closeModal(); }
-    function playNext(currentIndex) { let nextIndex = (currentIndex + 1) >= totalTracks ? 0 : currentIndex + 1; togglePlay(nextIndex); }
+    function playNext(currentIndex) { let nextIndex = (currentIndex + 1) >= tracks.length ? 0 : currentIndex + 1; togglePlay(nextIndex); }
 </script>
 </body>
 </html>
