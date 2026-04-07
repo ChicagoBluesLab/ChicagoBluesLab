@@ -6,81 +6,62 @@
     <title>Chicago Blues Lab | Digital Archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050505; --card: #121212; --accent: #e50914; --text: #fff; --text-dim: #a7a7a7; }
+        :root { --bg: #050505; --card: #121212; --accent: #e50914; --text: #fff; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
         
-        header { text-align: center; padding: 60px 20px; border-bottom: 1px solid #1a1a1a; background: linear-gradient(to bottom, #0a0a0a, #050505); }
-        h1 { color: var(--accent); font-size: 3.5rem; letter-spacing: -3px; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; }
+        header { text-align: center; padding: 60px 20px; border-bottom: 1px solid #1a1a1a; }
+        h1 { color: var(--accent); font-size: 3.5rem; letter-spacing: -3px; margin-bottom: 5px; text-transform: uppercase; font-weight: 900; }
         
-        /* VIP MEMBERSHIP BANNER */
-        .vip-banner {
-            background: linear-gradient(45deg, rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 1));
-            border: 1px solid #222;
-            padding: 25px;
-            border-radius: 20px;
-            max-width: 650px;
-            margin: 20px auto;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: 0.3s;
-        }
-        .vip-banner:hover { border-color: var(--accent); }
-        .vip-banner p { color: #fff; font-size: 1.1rem; margin: 0 0 15px 0; font-weight: 600; letter-spacing: 0.5px; }
-        
-        .btn-vip { 
-            background: #111; 
-            color: #fff; 
-            padding: 15px 35px; 
-            border-radius: 10px; 
-            text-decoration: none; 
-            font-weight: 800; 
-            display: inline-block;
-            font-size: 1rem;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            text-transform: uppercase;
-            border: 1px solid #333;
-        }
-        .btn-vip:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.2); }
-
         .container { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
         .track-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #1f1f1f; transition: 0.3s; position: relative; }
         .track-card.playing { border-color: var(--accent); box-shadow: 0 0 20px rgba(229, 9, 20, 0.3); }
-        .track-card:hover { border-color: #333; }
         
         .album-art { width: 100%; aspect-ratio: 1/1; border-radius: 10px; object-fit: cover; margin-bottom: 15px; }
         h3 { margin: 10px 0 5px 0; font-size: 1.1rem; color: #fff; }
-        audio { width: 100%; height: 35px; filter: invert(1); margin-bottom: 15px; opacity: 0.7; transition: 0.3s; }
-        audio:hover { opacity: 1; }
+        audio { width: 100%; height: 35px; filter: invert(1); margin-bottom: 15px; opacity: 0.8; }
         
-        /* DIRECT DOWNLOAD BUTTON */
         .dl-btn { display: block; text-align: center; background: var(--accent); color: #fff; padding: 12px; text-decoration: none; border-radius: 8px; font-size: 0.85rem; border: none; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; }
-        .dl-btn:hover { background: #ff0f1b; transform: scale(1.02); box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3); }
+        .dl-btn:hover { background: #ff0f1b; transform: scale(1.02); }
 
-        /* SUPPORT NOTE */
-        .thanks-note {
-            display: block; text-align: center; font-size: 0.7rem; color: #444; margin-top: 10px; font-weight: 500; line-height: 1.4;
-        }
-        .thanks-note a { color: var(--accent); text-decoration: none; font-weight: 700; transition: 0.3s; }
-        .thanks-note a:hover { color: #fff; }
+        /* SUPPORT MODAL */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); }
+        .modal-content { background: #000; margin: 15% auto; padding: 40px; border: 1px solid #222; width: 90%; max-width: 400px; border-radius: 25px; text-align: center; }
+        
+        .modal-content h2 { color: #fff; margin-bottom: 25px; font-weight: 900; }
+
+        .support-option { display: block; text-decoration: none; padding: 18px; border-radius: 12px; margin-bottom: 15px; font-weight: 800; transition: 0.3s; font-size: 1.1rem; }
+        
+        .opt-coffee { background: #FFDD00; color: #000; }
+        .opt-coffee:hover { background: #ffea00; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 221, 0, 0.2); }
+        
+        .opt-free { background: transparent; color: #666; border: 1px solid #333; font-weight: 500; font-size: 0.9rem; }
+        .opt-free:hover { color: #fff; border-color: #fff; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>CHICAGO BLUES LAB</h1>
-    
-    <div class="vip-banner">
-        <p>Support our archive and get exclusive content</p>
-        <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="btn-vip">
-            💎 JOIN ON YOUTUBE (MEMBERSHIP)
-        </a>
-    </div>
+    <p style="color: #444; font-weight: bold; letter-spacing: 2px;">OFFICIAL ARCHIVE</p>
 </header>
 
 <div class="container">
     <div class="music-grid" id="gallery"></div>
+</div>
+
+<div id="downloadModal" class="modal">
+    <div class="modal-content">
+        <h2>Grab Your Track 🎸</h2>
+        
+        <a href="https://www.buymeacoffee.com/ChicagoBluesLab" target="_blank" class="support-option opt-coffee" onclick="closeModal()">
+            ☕ Buy Me a Coffee
+        </a>
+
+        <a href="#" id="directDownloadLink" class="support-option opt-free" onclick="closeModal()">
+            Free Download
+        </a>
+    </div>
 </div>
 
 <script>
@@ -92,6 +73,8 @@
     ];
 
     const gallery = document.getElementById('gallery');
+    const modal = document.getElementById('downloadModal');
+    const directLink = document.getElementById('directDownloadLink');
 
     songFiles.forEach((name, index) => {
         const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
@@ -99,17 +82,23 @@
             <div class="track-card" id="card-${index}">
                 <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
                 <h3>${displayName}</h3>
-                <span style="font-size: 0.7rem; color: #333; margin-bottom: 15px; display: block; text-transform: uppercase; font-weight: bold;">BornEcho Original</span>
+                <span style="font-size: 0.7rem; color: #333; margin-bottom: 15px; display: block; text-transform: uppercase; font-weight: bold;">Original Production</span>
                 <audio id="audio-${index}" controls onplay="syncHighlight(${index})" onended="playNext(${index})">
                     <source src="${name}.mp3" type="audio/mpeg">
                 </audio>
-                
-                <a href="${name}.mp3" download="${displayName}.mp3" class="dl-btn">Download MP3</a>
-                
-                <span class="thanks-note">Enjoy the music! Please <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank">Subscribe</a> to support our work.</span>
+                <button onclick="openDownloadMenu('${name}.mp3', '${displayName}')" class="dl-btn">Download MP3</button>
             </div>
         `;
     });
+
+    function openDownloadMenu(file, name) {
+        directLink.href = file;
+        directLink.download = name + ".mp3";
+        modal.style.display = "block";
+    }
+
+    function closeModal() { modal.style.display = "none"; }
+    window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
 
     function playNext(currentIndex) {
         let nextIndex = currentIndex + 1;
