@@ -3,111 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chicago Blues Lab | Digital Archive</title>
+    <title>Chicago Blues Lab | Premium Archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050505; --card: #121212; --accent: #e50914; --text: #fff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        /* NETFLIX-INSPIRED PREMIUM DESIGN */
+        :root { --bg: #000; --card: #141414; --accent: #e50914; --text: #fff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        header { text-align: center; padding: 60px 20px; border-bottom: 1px solid #1a1a1a; }
-        h1 { color: var(--accent); font-size: 3.5rem; letter-spacing: -3px; margin-bottom: 5px; text-transform: uppercase; font-weight: 900; }
+        /* FIXED HEADER */
+        header { text-align: left; padding: 20px 4%; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; }
+        h1 { color: var(--accent); font-size: 2.2rem; letter-spacing: -2px; margin: 0; text-transform: uppercase; font-weight: 900; }
         
-        .container { padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
-        .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        .track-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #1f1f1f; transition: 0.3s; position: relative; }
-        .track-card.playing { border-color: var(--accent); box-shadow: 0 0 20px rgba(229, 9, 20, 0.3); }
-        
-        .album-art { width: 100%; aspect-ratio: 1/1; border-radius: 10px; object-fit: cover; margin-bottom: 15px; }
-        h3 { margin: 10px 0 5px 0; font-size: 1.1rem; color: #fff; }
-        audio { width: 100%; height: 35px; filter: invert(1); margin-bottom: 15px; opacity: 0.8; }
-        
-        .dl-btn { display: block; text-align: center; background: var(--accent); color: #fff; padding: 12px; text-decoration: none; border-radius: 8px; font-size: 0.85rem; border: none; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; }
-        .dl-btn:hover { background: #ff0f1b; transform: scale(1.02); }
+        /* YOUTUBE SUPPORT LINK */
+        .sub-call { color: #444; text-decoration: none; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; transition: 0.3s; margin-top: 5px; text-transform: uppercase; }
+        .sub-call:hover { color: var(--accent); }
 
-        /* MODAL */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); }
-        .modal-content { background: #000; margin: 15% auto; padding: 40px; border: 1px solid #222; width: 90%; max-width: 400px; border-radius: 25px; text-align: center; }
-        
-        .modal-content h2 { color: #fff; margin-bottom: 25px; font-weight: 900; letter-spacing: -1px; }
+        .main-container { padding: 140px 4% 60px 4%; }
 
-        .support-option { display: block; text-decoration: none; padding: 18px; border-radius: 12px; margin-bottom: 15px; font-weight: 800; transition: 0.3s; font-size: 1.1rem; }
+        /* ROWS & CAROUSEL */
+        .category-row { margin-bottom: 50px; }
+        .category-title { color: #fff; font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
         
-        /* NET YOUTUBE DESTEK BUTONU */
+        .track-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 25px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        .track-list::-webkit-scrollbar { height: 4px; }
+        .track-list::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+        /* POSTER CARDS */
+        .track-card { flex: 0 0 calc(20% - 12px); min-width: 240px; background: var(--card); border-radius: 8px; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; border: 1px solid #1a1a1a; cursor: pointer; }
+        .track-card:hover { transform: scale(1.05); z-index: 10; border-color: #444; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .track-card.playing { border: 2px solid var(--accent); }
+
+        .album-art { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-bottom: 1px solid #1a1a1a; }
+        
+        .card-meta { padding: 15px; }
+        h3 { margin: 0 0 5px 0; font-size: 0.95rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .meta-sub { font-size: 0.7rem; color: #555; font-weight: 600; text-transform: uppercase; }
+
+        /* HOVER CONTROLS */
+        .card-controls { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, #000 90%, transparent); padding: 15px; box-sizing: border-box; opacity: 0; transition: 0.3s; transform: translateY(10px); }
+        .track-card:hover .card-controls { opacity: 1; transform: translateY(0); }
+        
+        audio { width: 100%; height: 30px; filter: invert(1); opacity: 0.7; margin-bottom: 10px; }
+        .dl-btn { display: block; text-align: center; background: var(--accent); color: #fff; padding: 10px; text-decoration: none; border-radius: 4px; font-size: 0.75rem; border: none; font-weight: bold; width: 100%; cursor: pointer; transition: 0.2s; }
+        .dl-btn:hover { background: #ff0f1b; }
+
+        /* SUPPORT MODAL */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); }
+        .modal-content { background: #000; margin: 15% auto; padding: 40px; border: 1px solid #222; width: 90%; max-width: 400px; border-radius: 20px; text-align: center; border-bottom: 4px solid var(--accent); }
+        .modal-content h2 { color: #fff; margin-bottom: 25px; font-weight: 900; }
+        .support-option { display: block; text-decoration: none; padding: 18px; border-radius: 10px; margin-bottom: 15px; font-weight: 800; transition: 0.3s; font-size: 1.1rem; }
         .opt-membership { background: var(--accent); color: #fff; }
-        .opt-membership:hover { background: #ff0f1b; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4); }
-        
+        .opt-membership:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4); }
         .opt-free { background: transparent; color: #666; border: 1px solid #333; font-weight: 500; font-size: 0.9rem; }
         .opt-free:hover { color: #fff; border-color: #fff; }
+
+        @media (max-width: 768px) {
+            .track-card { flex: 0 0 calc(50% - 10px); min-width: 180px; }
+            h1 { font-size: 1.8rem; }
+            .category-title { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>CHICAGO BLUES LAB</h1>
-    <p style="color: #444; font-weight: bold; letter-spacing: 2px;">OFFICIAL ARCHIVE</p>
+    <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="sub-call">
+        Support us by subscribing on YouTube
+    </a>
 </header>
 
-<div class="container">
-    <div class="music-grid" id="gallery"></div>
-</div>
+<div class="main-container" id="main-content"></div>
 
 <div id="downloadModal" class="modal">
     <div class="modal-content">
         <h2>Download & Support 🎸</h2>
-        
         <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="support-option opt-membership" onclick="closeModal()">
             ⭐ Support on YouTube (Membership)
         </a>
-
         <a href="#" id="directDownloadLink" class="support-option opt-free" onclick="closeModal()">
-            Download for Free
+            Free Download
         </a>
     </div>
 </div>
 
 <script>
-    const songFiles = [
-        "Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle",
-        "Dark Bourbon", "Deep Velvet", "Gravel Voice", "Lost Highway",
-        "Midnight Fuel", "Neon Noir", "Shadow Riff", "Soul Whisper",
-        "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"
+    // TRACK LIST & CATEGORIES
+    const musicArchive = [
+        {
+            category: "Deep & Mysterious",
+            tracks: ["Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle", "Dark Bourbon"]
+        },
+        {
+            category: "Emotional Blues For You",
+            tracks: ["Deep Velvet", "Gravel Voice", "Lost Highway", "Midnight Fuel", "Neon Noir"]
+        },
+        {
+            category: "Romantic Night Sessions",
+            tracks: ["Shadow Riff", "Soul Whisper", "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"]
+        }
     ];
 
-    const gallery = document.getElementById('gallery');
+    const container = document.getElementById('main-content');
     const modal = document.getElementById('downloadModal');
     const directLink = document.getElementById('directDownloadLink');
+    let totalTracks = 0;
 
-    songFiles.forEach((name, index) => {
-        const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
-        gallery.innerHTML += `
-            <div class="track-card" id="card-${index}">
-                <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
-                <h3>${displayName}</h3>
-                <span style="font-size: 0.7rem; color: #333; margin-bottom: 15px; display: block; text-transform: uppercase; font-weight: bold;">Original Production</span>
-                <audio id="audio-${index}" controls onplay="syncHighlight(${index})" onended="playNext(${index})">
-                    <source src="${name}.mp3" type="audio/mpeg">
-                </audio>
-                <button onclick="openDownloadMenu('${name}.mp3', '${displayName}')" class="dl-btn">Download MP3</button>
-            </div>
+    musicArchive.forEach((cat, catIndex) => {
+        let catHtml = `
+            <div class="category-row">
+                <div class="category-title">${cat.category}</div>
+                <div class="track-list">
         `;
+
+        cat.tracks.forEach((name) => {
+            const currentTotalIndex = totalTracks;
+            const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
+            
+            catHtml += `
+                <div class="track-card" id="card-${currentTotalIndex}">
+                    <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
+                    <div class="card-meta">
+                        <h3>${displayName}</h3>
+                        <div class="meta-sub">Original Production</div>
+                    </div>
+                    <div class="card-controls">
+                        <audio id="audio-${currentTotalIndex}" controls onplay="syncHighlight(${currentTotalIndex})" onended="playNext(${currentTotalIndex})">
+                            <source src="${name}.mp3" type="audio/mpeg">
+                        </audio>
+                        <button onclick="openDownloadMenu('${name}.mp3', '${displayName}')" class="dl-btn">Download MP3</button>
+                    </div>
+                </div>
+            `;
+            totalTracks++;
+        });
+
+        catHtml += `</div></div>`;
+        container.innerHTML += catHtml;
     });
 
-    function openDownloadMenu(file, name) {
-        directLink.href = file;
-        directLink.download = name + ".mp3";
-        modal.style.display = "block";
-    }
-
+    function openDownloadMenu(file, name) { directLink.href = file; directLink.download = name + ".mp3"; modal.style.display = "block"; }
     function closeModal() { modal.style.display = "none"; }
     window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
 
     function playNext(currentIndex) {
         let nextIndex = currentIndex + 1;
-        if (nextIndex >= songFiles.length) nextIndex = 0;
+        if (nextIndex >= totalTracks) nextIndex = 0;
         const nextAudio = document.getElementById(`audio-${nextIndex}`);
         if (nextAudio) { 
             nextAudio.play(); 
-            document.getElementById(`card-${nextIndex}`).scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+            document.getElementById(`card-${nextIndex}`).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); 
         }
     }
 
