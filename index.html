@@ -9,58 +9,63 @@
         :root { --bg: #000; --card: #141414; --accent: #e50914; --text: #fff; --sub-text: #666; --btn-bg: #1f1f1f; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        header { text-align: left; padding: 20px 4%; background: #000; position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; border-bottom: 1px solid #1a1a1a; }
-        h1 { color: var(--accent); font-size: 1.5rem; letter-spacing: -1px; margin: 0; text-transform: uppercase; font-weight: 900; }
-        .sub-call { color: #888; text-decoration: none; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; display: block; margin-top: 4px; }
+        /* BAŞLIKLARI TAM ORTALADIK */
+        header { text-align: center; padding: 25px 4%; background: #000; position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; border-bottom: 1px solid #1a1a1a; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: var(--accent); font-size: 1.8rem; letter-spacing: -1px; margin: 0; text-transform: uppercase; font-weight: 900; }
+        .sub-call { color: #888; text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block; margin-top: 6px; transition: 0.3s; }
+        .sub-call:hover { color: var(--accent); }
 
-        .main-container { padding: 100px 2% 40px 2%; max-width: 1600px; margin: 0 auto; } 
+        .main-container { padding: 120px 2% 40px 2%; max-width: 1600px; margin: 0 auto; } 
 
         /* GRID SİSTEMİ - PC'de boşlukları doldurur, mobilde 2'li yapar */
         .track-list { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
-            gap: 10px; 
+            gap: 12px; 
         }
 
-        .track-card { background: var(--card); overflow: hidden; transition: 0.3s; position: relative; display: flex; flex-direction: column; border: 1px solid #1a1a1a; border-radius: 4px; }
-        .track-card:hover { border-color: #333; transform: translateY(-2px); }
+        .track-card { background: var(--card); overflow: hidden; transition: 0.3s; position: relative; display: flex; flex-direction: column; border: 1px solid #1a1a1a; border-radius: 6px; }
+        .track-card:hover { border-color: #444; transform: translateY(-3px); }
         .track-card.playing { border: 1px solid var(--accent); }
 
         .album-art-wrap { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; cursor: pointer; }
         .album-art { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-meta { padding: 10px; display: flex; flex-direction: column; gap: 5px; }
+        .card-meta { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
         h3 { margin: 0; font-size: 0.85rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .meta-sub { font-size: 0.65rem; color: var(--sub-text); font-weight: 600; text-transform: uppercase; }
 
-        .card-actions { display: flex; gap: 5px; width: 100%; margin-top: 5px; }
-        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 2px; border: none; border-radius: 3px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .card-actions { display: flex; gap: 6px; width: 100%; margin-top: 6px; }
+        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 2px; border: none; border-radius: 4px; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.2s; }
         .play-btn { background: var(--accent); color: #fff; }
+        .play-btn:hover { background: #ff0f1b; }
         .dl-btn { background: var(--btn-bg); color: #ccc; border: 1px solid #333; }
+        .dl-btn:hover { background: #333; color: #fff; }
 
         /* MOBİL AYARLAR */
         @media (max-width: 768px) {
+            h1 { font-size: 1.4rem; }
             .track-list { 
                 grid-template-columns: repeat(2, 1fr) !important; 
-                gap: 5px !important; 
+                gap: 6px !important; 
             }
-            .main-container { padding: 90px 1% 40px 1%; }
-            .action-btn { padding: 8px 2px; font-size: 0.55rem; }
+            .main-container { padding: 110px 1% 40px 1%; }
+            .track-card { border-radius: 4px; }
         }
 
-        /* MODAL (Aynı Kalanlar) */
+        /* MODAL */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
-        .modal-content { background: #000; margin: 30% auto; padding: 20px; border: 1px solid #333; width: 70%; max-width: 280px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--accent); }
-        .support-option { display: block; text-decoration: none; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; }
+        .modal-content { background: #000; margin: 30% auto; padding: 25px; border: 1px solid #333; width: 75%; max-width: 300px; border-radius: 20px; text-align: center; border-bottom: 5px solid var(--accent); }
+        .support-option { display: block; text-decoration: none; padding: 14px; border-radius: 10px; margin-bottom: 12px; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; }
         .opt-membership { background: var(--accent); color: #fff; }
-        .opt-free { background: transparent; color: #666; border: 1px solid #333; font-size: 0.7rem; }
+        .opt-free { background: transparent; color: #777; border: 1px solid #333; font-size: 0.75rem; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>CHICAGO BLUES LAB</h1>
-    <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="sub-call">Support on YouTube</a>
+    <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="sub-call">Support us by subscribing on YouTube</a>
 </header>
 
 <div class="main-container">
@@ -69,14 +74,14 @@
 
 <div id="downloadModal" class="modal">
     <div class="modal-content">
-        <h2 style="color:#fff; font-size:1rem; margin-bottom:15px;">SUPPORT & DOWNLOAD</h2>
+        <h2 style="color:#fff; font-size:1.1rem; margin-bottom:18px; font-weight:900;">SUPPORT & DOWNLOAD</h2>
         <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="support-option opt-membership" onclick="closeModal()">⭐ JOIN ON YOUTUBE</a>
         <a href="#" id="directDownloadLink" class="support-option opt-free" onclick="closeModal()">Free Download</a>
     </div>
 </div>
 
 <script>
-    // TÜM ŞARKILAR TEK LİSTEDE - PC'de yan yana dizilirler
+    // ŞARKILARIN LİSTESİ
     const tracks = [
         "Sorrow", "Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle", 
         "Dark Bourbon", "Deep Velvet", "Gravel Voice", "Lost Highway", "Midnight Fuel", 
@@ -117,7 +122,11 @@
         const icon = document.getElementById(`play-icon-${index}`);
         if (audio.paused) {
             document.querySelectorAll('audio').forEach((a, i) => { 
-                if (i !== index) { a.pause(); a.currentTime = 0; if(document.getElementById(`play-icon-${i}`)) document.getElementById(`play-icon-${i}`).innerText = '▶'; if(document.getElementById(`card-${i}`)) document.getElementById(`card-${i}`).classList.remove('playing'); } 
+                if (i !== index) { 
+                    a.pause(); a.currentTime = 0; 
+                    if(document.getElementById(`play-icon-${i}`)) document.getElementById(`play-icon-${i}`).innerText = '▶'; 
+                    if(document.getElementById(`card-${i}`)) document.getElementById(`card-${i}`).classList.remove('playing'); 
+                } 
             });
             audio.play(); icon.innerText = '⏸'; card.classList.add('playing');
         } else { audio.pause(); icon.innerText = '▶'; card.classList.remove('playing'); }
