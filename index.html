@@ -3,80 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chicago Blues Lab | Premium Archive</title>
+    <title>Chicago Blues Lab | Digital Archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
-        /* NETFLIX-INSPIRED PREMIUM DESIGN */
-        :root { --bg: #000; --card: #141414; --accent: #e50914; --text: #fff; }
+        :root { --bg: #050505; --card: #121212; --accent: #e50914; --text: #fff; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* FIXED HEADER */
         header { text-align: left; padding: 25px 4%; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent); position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; }
         h1 { color: var(--accent); font-size: 2.5rem; letter-spacing: -2px; margin: 0; text-transform: uppercase; font-weight: 900; }
         
-        /* YOUTUBE SUPPORT LINK - UPDATED WHITE & BOLD */
-        .sub-call { 
-            color: #ffffff; 
-            text-decoration: none; 
-            font-size: 1.1rem; 
-            font-weight: 900; 
-            letter-spacing: 1.5px; 
-            transition: 0.3s; 
-            margin-top: 8px; 
-            text-transform: uppercase;
-            text-shadow: 0px 0px 12px rgba(229, 9, 20, 0.6);
-        }
-        .sub-call:hover { 
-            color: var(--accent); 
-            transform: scale(1.05);
-            text-shadow: 0px 0px 20px rgba(229, 9, 20, 0.8);
-        }
+        .sub-call { color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: 900; letter-spacing: 1.5px; transition: 0.3s; margin-top: 8px; text-transform: uppercase; text-shadow: 0px 0px 12px rgba(229, 9, 20, 0.6); }
+        .sub-call:hover { color: var(--accent); transform: scale(1.05); }
 
         .main-container { padding: 160px 4% 60px 4%; }
-
-        /* ROWS & CAROUSEL */
-        .category-row { margin-bottom: 50px; }
-        .category-title { color: #fff; font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
-        
-        .track-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 25px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        .category-row { margin-bottom: 40px; }
+        .category-title { color: #fff; font-size: 1.6rem; font-weight: 700; margin-bottom: 15px; }
+        .track-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
         .track-list::-webkit-scrollbar { height: 4px; }
         .track-list::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
-        /* POSTER CARDS */
+        /* KART TASARIMI */
         .track-card { flex: 0 0 calc(20% - 12px); min-width: 260px; background: var(--card); border-radius: 8px; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; border: 1px solid #1a1a1a; cursor: pointer; }
-        .track-card:hover { transform: scale(1.06); z-index: 10; border-color: #555; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
         .track-card.playing { border: 2px solid var(--accent); }
 
-        .album-art { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-bottom: 1px solid #1a1a1a; }
+        /* KAPAK VE PLAY BUTONU */
+        .album-art-wrap { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-bottom: 1px solid #1a1a1a; position: relative; }
+        .album-art { width: 100%; height: 100%; object-fit: cover; }
         
-        .card-meta { padding: 15px; }
-        h3 { margin: 0 0 5px 0; font-size: 1rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .meta-sub { font-size: 0.75rem; color: #666; font-weight: 600; text-transform: uppercase; }
-
-        /* HOVER CONTROLS */
-        .card-controls { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, #000 95%, transparent); padding: 15px; box-sizing: border-box; opacity: 0; transition: 0.3s; transform: translateY(10px); }
-        .track-card:hover .card-controls { opacity: 1; transform: translateY(0); }
-        
-        audio { width: 100%; height: 32px; filter: invert(1); opacity: 0.8; margin-bottom: 12px; }
-        .dl-btn { display: block; text-align: center; background: var(--accent); color: #fff; padding: 12px; text-decoration: none; border-radius: 6px; font-size: 0.8rem; border: none; font-weight: 900; width: 100%; cursor: pointer; transition: 0.2s; text-transform: uppercase; }
-        .dl-btn:hover { background: #ff0f1b; box-shadow: 0 0 15px rgba(229, 9, 20, 0.4); }
-
-        /* SUPPORT MODAL */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); }
-        .modal-content { background: #000; margin: 12% auto; padding: 45px; border: 1px solid #333; width: 90%; max-width: 420px; border-radius: 25px; text-align: center; border-bottom: 6px solid var(--accent); box-shadow: 0 20px 50px rgba(0,0,0,1); }
-        .modal-content h2 { color: #fff; margin-bottom: 30px; font-weight: 900; font-size: 2rem; letter-spacing: -1px; }
-        .support-option { display: block; text-decoration: none; padding: 20px; border-radius: 12px; margin-bottom: 15px; font-weight: 900; transition: 0.3s; font-size: 1.15rem; text-transform: uppercase; }
-        .opt-membership { background: var(--accent); color: #fff; box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3); }
-        .opt-membership:hover { transform: translateY(-4px); background: #ff0f1b; box-shadow: 0 12px 25px rgba(229, 9, 20, 0.5); }
-        .opt-free { background: transparent; color: #888; border: 1px solid #444; font-weight: 600; font-size: 0.9rem; margin-top: 10px; }
-        .opt-free:hover { color: #fff; border-color: #fff; }
-
-        @media (max-width: 768px) {
-            .track-card { flex: 0 0 calc(50% - 10px); min-width: 200px; }
-            h1 { font-size: 2rem; }
-            .sub-call { font-size: 0.9rem; }
-            .main-container { padding: 150px 4% 60px 4%; }
+        /* PLAY BUTONU VE İNDİRME YAZISI (Kapağın Üzerinde) */
+        .card-on-art {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); /* Hafif gölge */
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0.7; transition: 0.3s;
         }
+        .track-card:hover .card-on-art { opacity: 1; background: rgba(0,0,0,0.5); }
+
+        .play-icon { font-size: 4rem; color: #fff; opacity: 0.9; margin-bottom: 10px; } /* Play ikonu */
+        .dl-call { font-size: 0.8rem; color: #fff; font-weight: 800; text-transform: uppercase; } /* İndirme yazısı */
+
+        .card-meta { padding: 12px; }
+        h3 { margin: 0 0 5px 0; font-size: 0.95rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .meta-sub { font-size: 0.7rem; color: #666; font-weight: 600; text-transform: uppercase; }
+
+        /* GİZLİ SES ÇALAR (Arka Planda) */
+        audio { position: absolute; width: 0; height: 0; opacity: 0; }
+
+        /* MODAL VE MOBİL OPTİMİZASYON KISIMLARI (Aynen Kalıyor) */
+        @media (max-width: 768px) { h1 { font-size: 1.8rem; } .sub-call { font-size: 0.8rem; margin-top: 5px; } .main-container { padding: 120px 3% 40px 3%; } .category-title { font-size: 1.1rem; margin-bottom: 10px; } .track-card { flex: 0 0 160px; min-width: 160px; border-radius: 6px; } .play-icon { font-size: 2.5rem; } .dl-call { font-size: 0.6rem; } .card-meta { padding: 8px; } h3 { font-size: 0.75rem; } .meta-sub { font-size: 0.6rem; } }
+        
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); }
+        .modal-content { background: #000; margin: 15% auto; padding: 30px; border: 1px solid #333; width: 85%; max-width: 400px; border-radius: 20px; text-align: center; border-bottom: 5px solid var(--accent); }
+        .modal-content h2 { color: #fff; margin-bottom: 20px; font-weight: 900; font-size: 1.5rem; }
+        .support-option { display: block; text-decoration: none; padding: 15px; border-radius: 10px; margin-bottom: 12px; font-weight: 900; transition: 0.3s; font-size: 1rem; text-transform: uppercase; }
+        .opt-membership { background: var(--accent); color: #fff; }
+        .opt-free { background: transparent; color: #888; border: 1px solid #444; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -103,7 +84,6 @@
 </div>
 
 <script>
-    // TRACK LIST & CATEGORIES
     const musicArchive = [
         {
             category: "Deep & Mysterious",
@@ -136,18 +116,21 @@
             const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
             
             catHtml += `
-                <div class="track-card" id="card-${currentTotalIndex}">
-                    <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
+                <div class="track-card" id="card-${currentTotalIndex}" >
+                    <div class="album-art-wrap" onclick="togglePlay(${currentTotalIndex})">
+                        <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
+                        <div class="card-on-art">
+                            <span class="play-icon" id="play-icon-${currentTotalIndex}">▶</span>
+                            <span class="dl-call" onclick="openDownloadMenu('${name}.mp3', '${displayName}')">Free Download</span>
+                        </div>
+                    </div>
                     <div class="card-meta">
                         <h3>${displayName}</h3>
                         <div class="meta-sub">BornEcho Original Production</div>
                     </div>
-                    <div class="card-controls">
-                        <audio id="audio-${currentTotalIndex}" controls onplay="syncHighlight(${currentTotalIndex})" onended="playNext(${currentTotalIndex})">
-                            <source src="${name}.mp3" type="audio/mpeg">
-                        </audio>
-                        <button onclick="openDownloadMenu('${name}.mp3', '${displayName}')" class="dl-btn">Download MP3</button>
-                    </div>
+                    <audio id="audio-${currentTotalIndex}" preload="none" onended="playNext(${currentTotalIndex})">
+                        <source src="${name}.mp3" type="audio/mpeg">
+                    </audio>
                 </div>
             `;
             totalTracks++;
@@ -157,6 +140,24 @@
         container.innerHTML += catHtml;
     });
 
+    function togglePlay(index) {
+        const audio = document.getElementById(`audio-${index}`);
+        const card = document.getElementById(`card-${index}`);
+        const icon = document.getElementById(`play-icon-${index}`);
+
+        if (audio.paused) {
+            // Başka çalan varsa durdur
+            document.querySelectorAll('audio').forEach((a, i) => { if (i !== index) { a.pause(); a.currentTime = 0; document.getElementById(`play-icon-${i}`).innerText = '▶'; document.getElementById(`card-${i}`).classList.remove('playing'); } });
+            audio.play();
+            icon.innerText = '⏸'; /* Duraklat ikonu */
+            card.classList.add('playing');
+        } else {
+            audio.pause();
+            icon.innerText = '▶';
+            card.classList.remove('playing');
+        }
+    }
+
     function openDownloadMenu(file, name) { directLink.href = file; directLink.download = name + ".mp3"; modal.style.display = "block"; }
     function closeModal() { modal.style.display = "none"; }
     window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
@@ -164,17 +165,8 @@
     function playNext(currentIndex) {
         let nextIndex = currentIndex + 1;
         if (nextIndex >= totalTracks) nextIndex = 0;
-        const nextAudio = document.getElementById(`audio-${nextIndex}`);
-        if (nextAudio) { 
-            nextAudio.play(); 
-            document.getElementById(`card-${nextIndex}`).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); 
-        }
-    }
-
-    function syncHighlight(index) {
-        document.querySelectorAll('.track-card').forEach(card => card.classList.remove('playing'));
-        document.getElementById(`card-${index}`).classList.add('playing');
-        document.querySelectorAll('audio').forEach((audio, i) => { if (i !== index) { audio.pause(); audio.currentTime = 0; } });
+        togglePlay(nextIndex); // Sıradakini çal
+        document.getElementById(`card-${nextIndex}`).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); 
     }
 </script>
 </body>
