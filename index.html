@@ -1,193 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chicago Blues Lab | Premium Archive</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #000; --card: #141414; --accent: #e50914; --text: #fff; --sub-text: #666; --btn-bg: #1f1f1f; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
-        
-        header { text-align: left; padding: 25px 4%; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent); position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; }
-        h1 { color: var(--accent); font-size: 2.5rem; letter-spacing: -2px; margin: 0; text-transform: uppercase; font-weight: 900; }
-        .sub-call { color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: 900; letter-spacing: 1.5px; transition: 0.3s; margin-top: 8px; text-transform: uppercase; text-shadow: 0px 0px 12px rgba(229, 9, 20, 0.6); }
-        .sub-call:hover { color: var(--accent); transform: scale(1.05); }
+        :root {
+            --primary-red: #cc0000;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-light: #e0e0e0;
+        }
 
-        .main-container { padding: 160px 4% 60px 4%; }
-        .category-row { margin-bottom: 50px; }
-        .category-title { color: #fff; font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
-        .track-list { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 25px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-        .track-list::-webkit-scrollbar { height: 4px; }
-        .track-list::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        .track-card { flex: 0 0 calc(20% - 12px); min-width: 260px; background: var(--card); border-radius: 8px; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; border: 1px solid #1a1a1a; cursor: pointer; display: flex; flex-direction: column; }
-        .track-card:hover { transform: scale(1.06); z-index: 10; border-color: #555; }
-        .track-card.playing { border: 2px solid var(--accent); }
+        h1 {
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 2px solid var(--primary-red);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
 
-        .album-art-wrap { width: 100%; aspect-ratio: 16/9; position: relative; overflow: hidden; }
-        .album-art { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .track-card:hover .album-art { transform: scale(1.03); }
+        .archive-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
 
-        .card-meta { padding: 15px 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; justify-content: space-between; }
-        .meta-text { display: flex; flex-direction: column; gap: 3px; }
-        h3 { margin: 0; font-size: 1rem; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .meta-sub { font-size: 0.75rem; color: var(--sub-text); font-weight: 600; text-transform: uppercase; }
+        .music-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
 
-        .card-actions { display: flex; gap: 10px; width: 100%; }
-        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: none; border-radius: 4px; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.2s; white-space: nowrap; }
-        .play-btn { background: var(--accent); color: #fff; }
-        .play-btn:hover { background: #ff0f1b; box-shadow: 0 0 15px rgba(229, 9, 20, 0.4); }
-        .dl-btn { background: var(--btn-bg); color: #ccc; border: 1px solid #333; }
-        .dl-btn:hover { background: #333; color: #fff; border-color: #555; }
+        .music-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-red);
+        }
 
-        /* MODAL STİLLERİ (PC İçin Genel Ayar) */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); }
-        .modal-content { background: #000; margin: 12% auto; padding: 45px; border: 1px solid #333; width: 90%; max-width: 420px; border-radius: 25px; text-align: center; border-bottom: 6px solid var(--accent); box-shadow: 0 20px 50px rgba(0,0,0,1); }
-        .modal-content h2 { color: #fff; margin-bottom: 30px; font-weight: 900; font-size: 2rem; letter-spacing: -1px; }
-        .support-option { display: block; text-decoration: none; padding: 20px; border-radius: 12px; margin-bottom: 15px; font-weight: 900; transition: 0.3s; font-size: 1.15rem; text-transform: uppercase; }
-        .opt-membership { background: var(--accent); color: #fff; }
-        .opt-free { background: transparent; color: #888; border: 1px solid #444; font-weight: 600; font-size: 0.9rem; margin-top: 10px; }
+        .music-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
 
-        /* MOBİL OPTİMİZASYON - BURAYI GÜNCELLEDİM */
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .sub-call { font-size: 0.8rem; }
-            .main-container { padding: 140px 4% 60px 4%; }
-            .category-title { font-size: 1.2rem; }
-            .track-card { flex: 0 0 160px; min-width: 160px; }
-            .card-meta { padding: 10px; }
-            h3 { font-size: 0.8rem; }
-            .meta-sub { font-size: 0.6rem; }
-            .action-btn { padding: 8px; font-size: 0.6rem; }
+        .card-info {
+            padding: 15px;
+            text-align: center;
+        }
 
-            /* MOBİL MODAL KESİN ÇÖZÜM */
-            .modal-content {
-                margin: 30% auto !important; /* Biraz daha aşağıda */
-                width: 60% !important; /* Ekranın sadece %60'ı kadar (PC'ye göre çok daha küçük) */
-                max-width: 280px !important; /* Maksimum genişliği iyice daralttım */
-                padding: 20px !important;
-                border-radius: 15px !important;
-            }
-            .modal-content h2 { font-size: 1.1rem !important; margin-bottom: 15px !important; }
-            .support-option { padding: 12px !important; font-size: 0.8rem !important; border-radius: 8px !important; }
-            .opt-free { font-size: 0.7rem !important; margin-top: 5px !important; }
+        .card-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        /* Modal (İndirme Ekranı) Tasarımı - Mobil Uyumlu */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #111;
+            padding: 20px;
+            border: 2px solid var(--primary-red);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 350px; /* Daha derli toplu durması için küçülttük */
+            text-align: center;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-join {
+            display: block;
+            background: var(--primary-red);
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-download {
+            display: block;
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-download:hover {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 15px;
+            filter: invert(100%) hue-rotate(180deg) brightness(1.5); /* Koyu tema uyumu */
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>CHICAGO BLUES LAB</h1>
-    <a href="https://www.youtube.com/@ChicagoBluesLab?sub_confirmation=1" target="_blank" class="sub-call">
-        Support us by subscribing on YouTube
-    </a>
-</header>
+    <h1>Chicago Blues Lab Arşivi</h1>
 
-<div class="main-container" id="main-content"></div>
+    <div class="archive-container" id="musicGrid">
+        </div>
 
-<div id="downloadModal" class="modal">
-    <div class="modal-content">
-        <h2>SUPPORT & DOWNLOAD</h2>
-        <a href="https://www.youtube.com/@ChicagoBluesLab/membership" target="_blank" class="support-option opt-membership" onclick="closeModal()">
-            ⭐ JOIN ON YOUTUBE (MEMBERSHIP)
-        </a>
-        <a href="#" id="directDownloadLink" class="support-option opt-free" onclick="closeModal()">
-            Free Download
-        </a>
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="color: var(--primary-red);"></h2>
+            <p>Destek olmak için YouTube kanalımıza katılın!</p>
+            <a href="https://www.youtube.com/@ChicagoBluesLab/join" target="_blank" class="btn-join">YOUTUBE'DA KATIL</a>
+            <a id="downloadLink" href="#" download class="btn-download">ÜCRETSİZ İNDİR (.MP3)</a>
+            <audio id="audioPlayer" controls>
+                <source id="audioSource" src="" type="audio/mpeg">
+            </audio>
+        </div>
     </div>
-</div>
 
-<script>
-    const musicArchive = [
-        {
-            category: "Deep & Mysterious",
-            tracks: ["Bitter Sweet", "Blue Alley", "Cold Whiskey", "Concrete Jungle", "Dark Bourbon"]
-        },
-        {
-            category: "Emotional Blues For You",
-            tracks: ["Deep Velvet", "Gravel Voice", "Lost Highway", "Midnight Fuel", "Neon Noir"]
-        },
-        {
-            category: "Romantic Night Sessions",
-            tracks: ["Shadow Riff", "Soul Whisper", "Chicago Blues Lab – Midnight Blues Guitar _ Relaxing Dark Blues Music-2026"]
-        }
-    ];
+    <script>
+        // Müzik listesi - SORROW BURAYA EKLENDİ
+        const musicData = [
+            {
+                title: "Sorrow",
+                img: "Sorrow.jpeg",
+                file: "Sorrow.mp3"
+            },
+            {
+                title: "Midnight Bourbon Blues",
+                img: "midnight.jpg", // Daha önceki görsel adın neyse ona göre düzeltirsin
+                file: "midnight.mp3"
+            }
+        ];
 
-    const container = document.getElementById('main-content');
-    const modal = document.getElementById('downloadModal');
-    const directLink = document.getElementById('directDownloadLink');
-    let totalTracks = 0;
+        const grid = document.getElementById('musicGrid');
 
-    musicArchive.forEach((cat, catIndex) => {
-        let catHtml = `
-            <div class="category-row">
-                <div class="category-title">${cat.category}</div>
-                <div class="track-list">
-        `;
-
-        cat.tracks.forEach((name) => {
-            const currentTotalIndex = totalTracks;
-            const displayName = name.replace(/_/g, ' ').replace(/-/g, ' ');
-            
-            catHtml += `
-                <div class="track-card" id="card-${currentTotalIndex}" >
-                    <div class="album-art-wrap" onclick="togglePlay(${currentTotalIndex})">
-                        <img src="${name}.jpeg" onerror="this.src='${name}.jpg'" class="album-art">
-                    </div>
-                    <div class="card-meta">
-                        <div class="meta-text">
-                            <h3>${displayName}</h3>
-                            <div class="meta-sub">BornEcho Original Production</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="action-btn play-btn" id="play-btn-${currentTotalIndex}" onclick="togglePlay(${currentTotalIndex})">
-                                <span class="play-icon" id="play-icon-${currentTotalIndex}">▶</span>
-                            \<\/button>
-                            <button class="action-btn dl-btn" onclick="openDownloadMenu('${name}.mp3', '${displayName}')">
-                                <span>⬇</span> FREE DOWNLOAD
-                            \<\/button>
-                        </div>
-                    </div>
-                    <audio id="audio-${currentTotalIndex}" preload="none" onended="playNext(${currentTotalIndex})">
-                        <source src="${name}.mp3" type="audio/mpeg">
-                    </audio>
+        musicData.forEach(music => {
+            const card = document.createElement('div');
+            card.className = 'music-card';
+            card.innerHTML = `
+                <img src="${music.img}" alt="${music.title}">
+                <div class="card-info">
+                    <h3>${music.title}</h3>
                 </div>
             `;
-            totalTracks++;
+            card.onclick = () => openModal(music);
+            grid.appendChild(card);
         });
 
-        catHtml += `</div></div>`;
-        container.innerHTML += catHtml;
-    });
-
-    function togglePlay(index) {
-        const audio = document.getElementById(`audio-${index}`);
-        const card = document.getElementById(`card-${index}`);
-        const icon = document.getElementById(`play-icon-${index}`);
-
-        if (audio.paused) {
-            document.querySelectorAll('audio').forEach((a, i) => { if (i !== index) { a.pause(); a.currentTime = 0; document.getElementById(`play-icon-${i}`).innerText = '▶'; document.getElementById(`card-${i}`).classList.remove('playing'); } });
-            audio.play();
-            icon.innerText = '⏸';
-            card.classList.add('playing');
-        } else {
-            audio.pause();
-            icon.innerText = '▶';
-            card.classList.remove('playing');
+        function openModal(music) {
+            document.getElementById('modalTitle').innerText = music.title;
+            document.getElementById('downloadLink').href = music.file;
+            document.getElementById('audioSource').src = music.file;
+            const player = document.getElementById('audioPlayer');
+            player.load();
+            document.getElementById('downloadModal').style.display = 'flex';
         }
-    }
 
-    function openDownloadMenu(file, name) { directLink.href = file; directLink.download = name + ".mp3"; modal.style.display = "block"; }
-    function closeModal() { modal.style.display = "none"; }
-    window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
+        function closeModal() {
+            document.getElementById('downloadModal').style.display = 'none';
+            document.getElementById('audioPlayer').pause();
+        }
 
-    function playNext(currentIndex) {
-        let nextIndex = currentIndex + 1;
-        if (nextIndex >= totalTracks) nextIndex = 0;
-        togglePlay(nextIndex);
-        document.getElementById(`card-${nextIndex}`).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); 
-    }
-</script>
+        // Dışarı tıklayınca kapansın
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('downloadModal')) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>
